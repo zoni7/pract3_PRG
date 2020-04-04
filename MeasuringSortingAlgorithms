@@ -137,8 +137,11 @@ public class MeasuringSortingAlgorithms {
 
         int talla = INITALLA;
         int[] a; // array promedi
+        int[] aRes = new int[10];
         int[] m; // array millor
+        int[] mRes = new int[10];
         int[] p; // array pitjor
+        int[] pRes = new int[10];
 
         for (int i = 0; i <= REPETICIONSL; i++) {
             int k = 0;
@@ -154,7 +157,7 @@ public class MeasuringSortingAlgorithms {
                 MeasurableAlgorithms.insertionSort(m);
                 tf = System.nanoTime();
                 tt = (tf - ti);
-                m[k] += tt;
+                mRes[k] += tt;
                 //System.out.print("   " + tt);
 
                  // incrementem la talla i k
@@ -179,7 +182,7 @@ public class MeasuringSortingAlgorithms {
                 MeasurableAlgorithms.insertionSort(p);
                 tf = System.nanoTime();
                 tt = (tf - ti);
-                p[k] += tt;
+                pRes[k] += tt;
                 //System.out.print("   " + tt);
 
                 //PROMEDI
@@ -189,7 +192,7 @@ public class MeasuringSortingAlgorithms {
                 MeasurableAlgorithms.selectionSort(a);
                 tf = System.nanoTime();
                 tt = (tf - ti);
-                a[k] += tt;
+                aRes[k] += tt;
                 //System.out.print("   " + tt + "\n");
 
                  // incrementem la talla i k
@@ -200,7 +203,8 @@ public class MeasuringSortingAlgorithms {
 
         int j = 0;
         for (int i = INITALLA; i <= MAXTALLA; i+= INCRTALLA) {
-            System.out.println(i + "     " + m[j]/20000 + "     " + p[j]/200 + "     " + a[j]/200);
+            System.out.println(i + "     " + mRes[j]/20000 + "     " + pRes[j]/200 + "     " + 
+            + aRes[j]/200);
             j++;
         }
     }
