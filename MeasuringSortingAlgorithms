@@ -3,31 +3,31 @@
 package pract3;
 
 import java.util.Locale;
-/** Classe MeasuringSortingAlgorithms: Estudi empiric de costs 
+/** Classe MeasuringSortingAlgorithms: Estudi empiric de costs
  *  dels metodes d'ordenacio.
  *  @author PRG - ETSInf
  *  @version Curs 2019-2020
  */
 public class MeasuringSortingAlgorithms {
     // Constants que defineixen els parametres de mesura
-    public static final int MAXTALLA = 10000, INITALLA = 1000; 
+    public static final int MAXTALLA = 10000, INITALLA = 1000;
     public static final int INCRTALLA = 1000;
     public static final int REPETICIONSQ = 200, REPETICIONSL = 20000;
-    public static final double NMS = 1e3;  // relacio micro - nanosegons   
-    
-    
+    public static final double NMS = 1e3;  // relacio micro - nanosegons
+
+
     /** No hi ha objectes d'aquesta classe. */
     private MeasuringSortingAlgorithms() { }
-    
+
     /** Crea un array d'int de talla t amb valors a 0.
      *  @param t int, la talla.
      *  @result int[], l'array generat.
      */
-    private static int[] createArray(int t) { 
+    private static int[] createArray(int t) {
         int[] a = new int[t];
         return a;
     }
-  
+
     /** Omple els elements d'un array a d'int amb
      *  valors aleatoris entre 0 i a.length-1.
      *  @param a int[], l'array.
@@ -38,12 +38,12 @@ public class MeasuringSortingAlgorithms {
             a[i] = (int) Math.random() * a.length ;
         }
     }
-    
+
     /** Omple els elements d'un array a de forma creixent,
      *  amb valors des de 0 fins a.length-1.
      *  @param a int[], l'array.
      */
-   private static void fillArraySortedInAscendingOrder(int[] a) { 
+   private static void fillArraySortedInAscendingOrder(int[] a) {
         // COMPLETAR
         for (int i = 0; i < a.length; i++) {
             a[i] = i;
@@ -54,20 +54,21 @@ public class MeasuringSortingAlgorithms {
      *  amb valors des de a.length-1 fins 0.
      *  @param a int[], l'array.
      */
-    private static void fillArraySortedInDescendingOrder(int[] a) { 
+    private static void fillArraySortedInDescendingOrder(int[] a) {
         // COMPLETAR
         for (int i = a.length - 1; i >= 0; i--) {
             a[i] = i;
         }
     }
 
-    public static void measuringSelectionSort() { 
-        long ti = 0, tf = 0, tt = 0, tp = 0 ;// Temps inicial, final, total i promedi 
+    public static void measuringSelectionSort() {
+        long ti = 0, tf = 0, tt = 0, tp = 0 ;// Temps inicial, final, total i promedi
+        int[] res = new int[10];
         // Imprimir capçalera de resultats
         System.out.println("# Seleccio. Temps en microsegons");
         System.out.print("# Talla    Promedi \n");
         System.out.print("#------------------\n");
-        
+
         // COMPLETAR
         int[] a = createArray(100);
         fillArrayRandom(a);
@@ -75,15 +76,15 @@ public class MeasuringSortingAlgorithms {
         MeasurableAlgorithms.selectionSort(a);
         tf = System.nanoTime();
         tt = (tf - ti);
-        
+
         //MOSTRAR EL TEMPS PER PANTALLA
-        System.out.println("EL temps trancurregut es " + tt + 
+        System.out.println("EL temps trancurregut es " + tt +
         " nanosegons i la talla de l'array es " + a.length);
-        
-        
+
+
         // Promedi
- 
-        
+
+
         for (int i = 0; i < REPETICIONSQ; i ++) {
             a = createArray(100);
             fillArrayRandom(a);
@@ -91,54 +92,59 @@ public class MeasuringSortingAlgorithms {
             MeasurableAlgorithms.selectionSort(a);
             tf = System.nanoTime();
             tt = (tf - ti);
-            tp += tt;           
+            tp += tt;
         }
-        
-        System.out.print("El temps promedi de 200 repeticions es " + 
+
+        System.out.print("El temps promedi de 200 repeticions es " +
         tp/REPETICIONSQ + " nanosegons");
-        
+
         //ACTIVITAT 8
-        int talla = INITALLA;
-        
         System.out.print("# Seleccio directa. Temps en microsegons\n# Talla Promedi\n# -------------\n");
-        while (talla <= MAXTALLA) {
-            a = createArray(talla);
-            fillArrayRandom(a);
-            ti = System.nanoTime();
-            MeasurableAlgorithms.selectionSort(a);
-            tf = System.nanoTime();
-            tt = (tf - ti);
-            System.out.print(talla + "  " + tt +"\n");
-            talla += INCRTALLA;
+        int talla = INITALLA;
+        for (int i = 0; i <= REPETICIONSQ i++) {
+            int k = 0;
+
+
+            while (talla <= MAXTALLA) {
+                a = createArray(talla);
+                fillArrayRandom(a);
+                ti = System.nanoTime();
+                MeasurableAlgorithms.selectionSort(a);
+                tf = System.nanoTime();
+                tt = (tf - ti);
+                res[k] += tt;
+                //System.out.print(talla + "  " + tt +"\n");
+                talla += INCRTALLA;
+                k++;
+            }
         }
-        
-        // ACTIVITAT 11. A partir d'aci son proves que faig jo per completar l'activitat 11
-        
-        System.out.print("# Insercio directa. Temps en microsegons\n# Talla   Millor   Pitjor   Promedi\n# ----------------------------------\n");
-        
-        
-        
-        
+
+        int j = 0;
+        for (int i = INITALLA; i <= MAXTALLA; i++ ) {
+            System.out.println(INITALLAMERGE + "     " + res[j]/200 );
+            j++;
+        }
+
     }
 
     public static void measuringInsertionSort() {
-    
-        long ti = 0, tf = 0, tt = 0; // Temps inicial, final i total        
+
+        long ti = 0, tf = 0, tt = 0; // Temps inicial, final i total
         // Imprimir capçalera de resultats
         System.out.println("# Insercio. Temps en microsegons");
         System.out.print("# Talla   Millor     Pitjor     Promedi \n");
         System.out.print("#---------------------------------------\n");
-        
+
         // COMPLETAR
-        
+
         int talla = INITALLA;
         int[] a;
         int[] m;
         int[] p;
-        
-        
-        
-        while (talla <= MAXTALLA) { 
+
+
+
+        while (talla <= MAXTALLA) {
             // Creem dos arrays, un es el cas pitjor i l'altre el cas millor
             m = createArray(talla);
             fillArraySortedInAscendingOrder(m);
@@ -158,7 +164,7 @@ public class MeasuringSortingAlgorithms {
             tf = System.nanoTime();
             tt = (tf - ti);
             System.out.print("   " + tt);
-            
+
             //PROMEDI
             a = createArray(talla);
             fillArrayRandom(a);
@@ -167,24 +173,24 @@ public class MeasuringSortingAlgorithms {
             tf = System.nanoTime();
             tt = (tf - ti);
              System.out.print("   " + tt + "\n");
-             
+
              // incrementem la talla
             talla += INCRTALLA;
         }
     }
-  
-    public static void measuringMergeSort() { 
+
+    public static void measuringMergeSort() {
         int INITALLAMERGE = (int)Math.pow(2, 10);
         int MAXTALLAMERGE = (int)Math.pow(2, 19);
         long ti = 0, tf = 0, tt = 0;
-        int[] a;// Temps inicial, final i total   
-        
+        int[] a;// Temps inicial, final i total
+
         int[] res = new int[10];
         // Imprimir capçalera de resultats
         System.out.println("# Mergesort. Temps en microsegons");
         System.out.print("# Talla     Promedi \n");
         System.out.print("#-------------------\n");
-        
+
         // COMPLETAR
         for (int i = 0; i <= 200; i++) {
             int k = 0;
@@ -201,7 +207,7 @@ public class MeasuringSortingAlgorithms {
                 k++;
             }
         }
-        
+
         int j = 0;
         for (int i = INITALLAMERGE; i <= MAXTALLAMERGE; i *= 2 ) {
             System.out.println(INITALLAMERGE + "     " + res[j]/200 );
@@ -218,26 +224,26 @@ public class MeasuringSortingAlgorithms {
         System.out.println("   3 -> MergeSort");
     }
 
-    public static void main(String[] args) {        
+    public static void main(String[] args) {
         if (args.length != 1) { help(); }
         else {
             try {
                 int a = Integer.parseInt(args[0]);
                 switch (a) {
-                    case 1: 
+                    case 1:
                         measuringInsertionSort();
                         break;
-                    case 2: 
+                    case 2:
                         measuringSelectionSort();
                         break;
-                    case 3: 
+                    case 3:
                         measuringMergeSort();
                         break;
-                    default: 
+                    default:
                         help();
                 }
             } catch (Exception e) {
-                help(); 
+                help();
             }
         }
     }
