@@ -136,44 +136,72 @@ public class MeasuringSortingAlgorithms {
         // COMPLETAR
 
         int talla = INITALLA;
-        int[] a;
-        int[] m;
-        int[] p;
+        int[] a; // array promedi
+        int[] m; // array millor
+        int[] p; // array pitjor
 
+        for (int i = 0; i <= REPETICIONSL; i++) {
+            int k = 0;
+            while (talla <= MAXTALLA) {
+                // Creem array cas cas millor
+                m = createArray(talla);
+                fillArraySortedInAscendingOrder(m);
 
+                // imprimir la talla
+                //System.out.print("   " + talla);
+                //cas millor
+                ti = System.nanoTime();
+                MeasurableAlgorithms.insertionSort(m);
+                tf = System.nanoTime();
+                tt = (tf - ti);
+                m[k] += tt;
+                //System.out.print("   " + tt);
 
-        while (talla <= MAXTALLA) {
-            // Creem dos arrays, un es el cas pitjor i l'altre el cas millor
-            m = createArray(talla);
-            fillArraySortedInAscendingOrder(m);
-            p = createArray(talla);
-            fillArraySortedInDescendingOrder(p);
-            // imprimir la talla
-            System.out.print("   " + talla);
-            //cas millor
-            ti = System.nanoTime();
-            MeasurableAlgorithms.insertionSort(m);
-            tf = System.nanoTime();
-            tt = (tf - ti);
-            System.out.print("   " + tt);
-            //Cas pitjor
-            ti = System.nanoTime();
-            MeasurableAlgorithms.insertionSort(p);
-            tf = System.nanoTime();
-            tt = (tf - ti);
-            System.out.print("   " + tt);
+                 // incrementem la talla i k
+                talla += INCRTALLA;
+                k++;
+            }
+        }
 
-            //PROMEDI
-            a = createArray(talla);
-            fillArrayRandom(a);
-            ti = System.nanoTime();
-            MeasurableAlgorithms.selectionSort(a);
-            tf = System.nanoTime();
-            tt = (tf - ti);
-             System.out.print("   " + tt + "\n");
+        for (int i = 0; i <= REPETICIONSQ; i++) {
+            int k = 0;
 
-             // incrementem la talla
-            talla += INCRTALLA;
+            while (talla <= MAXTALLA) {
+                // Creem array cas cas pitjor
+
+                p = createArray(talla);
+                fillArraySortedInDescendingOrder(p);
+                // imprimir la talla
+                //System.out.print("   " + talla);
+
+                //Cas pitjor
+                ti = System.nanoTime();
+                MeasurableAlgorithms.insertionSort(p);
+                tf = System.nanoTime();
+                tt = (tf - ti);
+                p[k] += tt;
+                //System.out.print("   " + tt);
+
+                //PROMEDI
+                a = createArray(talla);
+                fillArrayRandom(a);
+                ti = System.nanoTime();
+                MeasurableAlgorithms.selectionSort(a);
+                tf = System.nanoTime();
+                tt = (tf - ti);
+                a[k] += tt;
+                //System.out.print("   " + tt + "\n");
+
+                 // incrementem la talla i k
+                talla += INCRTALLA;
+                k++;
+            }
+        }
+
+        int j = 0;
+        for (int i = INITALLA; i <= MAXTALLA; i+= INCRTALLA) {
+            System.out.println(i + "     " + m[j]/20000 + "     " + p[j]/200 + "     " + a[j]/200);
+            j++;
         }
     }
 
