@@ -1,5 +1,3 @@
-
-
 package pract3;
 
 import java.util.Locale;
@@ -101,7 +99,7 @@ public class MeasuringSortingAlgorithms {
         //ACTIVITAT 8
         System.out.print("# Seleccio directa. Temps en microsegons\n# Talla Promedi\n# -------------\n");
         int talla = INITALLA;
-        for (int i = 0; i <= REPETICIONSQ i++) {
+        for (int i = 0; i <= REPETICIONSQ; i++) {
             int k = 0;
 
 
@@ -120,8 +118,8 @@ public class MeasuringSortingAlgorithms {
         }
 
         int j = 0;
-        for (int i = INITALLA; i <= MAXTALLA; i++ ) {
-            System.out.println(INITALLAMERGE + "     " + res[j]/200 );
+        for (int i = INITALLA; i <= MAXTALLA; i+= INCRTALLA) {
+            System.out.println(i + "     " + res[j]/200 );
             j++;
         }
 
