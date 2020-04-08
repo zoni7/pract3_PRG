@@ -135,19 +135,19 @@ public class MeasuringSortingAlgorithms {
 
         // COMPLETAR
 
-        int talla = INITALLA;
+        int tallaL = INITALLA;
         int[] a; // array promedi
-        int[] aRes = new int[10];
+        long[] aRes = new long[10];
         int[] m; // array millor
-        int[] mRes = new int[10];
+        long[] mRes = new long[10];
         int[] p; // array pitjor
-        int[] pRes = new int[10];
+        long[] pRes = new long[10];
 
         for (int i = 0; i <= REPETICIONSL; i++) {
             int k = 0;
-            while (talla <= MAXTALLA) {
+            while (tallaL <= MAXTALLA) {
                 // Creem array cas cas millor
-                m = createArray(talla);
+                m = createArray(tallaL);
                 fillArraySortedInAscendingOrder(m);
 
                 // imprimir la talla
@@ -161,18 +161,18 @@ public class MeasuringSortingAlgorithms {
                 //System.out.print("   " + tt);
 
                  // incrementem la talla i k
-                talla += INCRTALLA;
+                tallaL= tallaL + INCRTALLA;
                 k++;
             }
         }
-
+        
+        int tallaQ = INITALLA;
         for (int i = 0; i <= REPETICIONSQ; i++) {
-            int k = 0;
-
-            while (talla <= MAXTALLA) {
+            int k = 0;           
+            while (tallaQ <= MAXTALLA) {
                 // Creem array cas cas pitjor
 
-                p = createArray(talla);
+                p = createArray(tallaQ);
                 fillArraySortedInDescendingOrder(p);
                 // imprimir la talla
                 //System.out.print("   " + talla);
@@ -186,17 +186,17 @@ public class MeasuringSortingAlgorithms {
                 //System.out.print("   " + tt);
 
                 //PROMEDI
-                a = createArray(talla);
+                a = createArray(tallaQ);
                 fillArrayRandom(a);
                 ti = System.nanoTime();
-                MeasurableAlgorithms.selectionSort(a);
+                MeasurableAlgorithms.insertionSort(a);
                 tf = System.nanoTime();
                 tt = (tf - ti);
                 aRes[k] += tt;
                 //System.out.print("   " + tt + "\n");
 
                  // incrementem la talla i k
-                talla += INCRTALLA;
+                tallaQ += INCRTALLA;
                 k++;
             }
         }
