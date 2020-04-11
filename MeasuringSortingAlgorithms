@@ -1,5 +1,7 @@
 package pract3;
 
+//package pract3;
+
 import java.util.Locale;
 /** Classe MeasuringSortingAlgorithms: Estudi empiric de costs
  *  dels metodes d'ordenacio.
@@ -98,151 +100,117 @@ public class MeasuringSortingAlgorithms {
 
         //ACTIVITAT 8
         System.out.print("# Seleccio directa. Temps en microsegons\n# Talla Promedi\n# -------------\n");
-        int talla = INITALLA;
-        for (int i = 0; i <= REPETICIONSQ; i++) {
+       
+        for (int talla = INITALLA; talla <= MAXTALLA; talla += INCRTALLA) {
             int k = 0;
-
-
-            while (talla <= MAXTALLA) {
+           
+            while (k <= REPETICIONSQ) {
                 a = createArray(talla);
                 fillArrayRandom(a);
                 ti = System.nanoTime();
                 MeasurableAlgorithms.selectionSort(a);
                 tf = System.nanoTime();
                 tt = (tf - ti);
-                res[k] += tt;
-                //System.out.print(talla + "  " + tt +"\n");
-                talla += INCRTALLA;
+                //res[k] += tt;                
+                
                 k++;
             }
-        }
-
-        int j = 0;
-        for (int i = INITALLA; i <= MAXTALLA; i+= INCRTALLA) {
-            System.out.println(i + "     " + res[j]/200 );
-            j++;
+            System.out.print(talla + "  " + tt / REPETICIONSQ +"\n");
         }
 
     }
 
     public static void measuringInsertionSort() {
 
-        long ti = 0, tf = 0, tt = 0; // Temps inicial, final i total
+        long ti = 0, tf = 0, tt = 0, tt2 = 0, tt3 = 0; // Temps inicial, final i total
         // Imprimir capçalera de resultats
         System.out.println("# Insercio. Temps en microsegons");
         System.out.print("# Talla   Millor     Pitjor     Promedi \n");
         System.out.print("#---------------------------------------\n");
 
         // COMPLETAR
+        for(int talla = INITALLA; talla <= MAXTALLA; talla += INCRTALLA){
+            int[] a; // array promedi           
+            int[] m; // array millor            
+            int[] p; // array pitjor            
+            
+            for (int i = 0; i <= REPETICIONSL; i++) {
+                              
+                    // Creem array cas cas millor
+                    m = createArray(talla);
+                    fillArraySortedInAscendingOrder(m);
 
-        int tallaL = INITALLA;
-        int[] a; // array promedi
-        long[] aRes = new long[10];
-        int[] m; // array millor
-        long[] mRes = new long[10];
-        int[] p; // array pitjor
-        long[] pRes = new long[10];
-
-        for (int i = 0; i <= REPETICIONSL; i++) {
-            int k = 0;
-            while (tallaL <= MAXTALLA) {
-                // Creem array cas cas millor
-                m = createArray(tallaL);
-                fillArraySortedInAscendingOrder(m);
-
-                // imprimir la talla
-                //System.out.print("   " + talla);
-                //cas millor
-                ti = System.nanoTime();
-                MeasurableAlgorithms.insertionSort(m);
-                tf = System.nanoTime();
-                tt = (tf - ti);
-                mRes[k] += tt;
-                //System.out.print("   " + tt);
-
-                 // incrementem la talla i k
-                tallaL= tallaL + INCRTALLA;
-                k++;
+                    //cas millor
+                    ti = System.nanoTime();
+                    MeasurableAlgorithms.insertionSort(m);
+                    tf = System.nanoTime();
+                    tt += (tf - ti);
+   
             }
-        }
-        
-        int tallaQ = INITALLA;
-        for (int i = 0; i <= REPETICIONSQ; i++) {
-            int k = 0;           
-            while (tallaQ <= MAXTALLA) {
-                // Creem array cas cas pitjor
+            System.out.print("   " + talla +"   " + tt/REPETICIONSL);
+                        
+            for (int i = 0; i <= REPETICIONSQ; i++) {
+                
+                    // Creem array cas cas pitjor
+    
+                    p = createArray(talla);
+                    fillArraySortedInDescendingOrder(p);
 
-                p = createArray(tallaQ);
-                fillArraySortedInDescendingOrder(p);
-                // imprimir la talla
-                //System.out.print("   " + talla);
+                    //Cas pitjor
+                    ti = System.nanoTime();
+                    MeasurableAlgorithms.insertionSort(p);
+                    tf = System.nanoTime();
+                    tt2 += (tf - ti);
 
-                //Cas pitjor
-                ti = System.nanoTime();
-                MeasurableAlgorithms.insertionSort(p);
-                tf = System.nanoTime();
-                tt = (tf - ti);
-                pRes[k] += tt;
-                //System.out.print("   " + tt);
-
-                //PROMEDI
-                a = createArray(tallaQ);
-                fillArrayRandom(a);
-                ti = System.nanoTime();
-                MeasurableAlgorithms.insertionSort(a);
-                tf = System.nanoTime();
-                tt = (tf - ti);
-                aRes[k] += tt;
-                //System.out.print("   " + tt + "\n");
-
-                 // incrementem la talla i k
-                tallaQ += INCRTALLA;
-                k++;
+                    //PROMEDI
+                    a = createArray(talla);
+                    fillArrayRandom(a);
+                    ti = System.nanoTime();
+                    MeasurableAlgorithms.insertionSort(a);
+                    tf = System.nanoTime();
+                    tt3 += (tf - ti);
+                
             }
-        }
-
-        int j = 0;
-        for (int i = INITALLA; i <= MAXTALLA; i+= INCRTALLA) {
-            System.out.println(i + "     " + mRes[j]/20000 + "     " + pRes[j]/200 + "     " + 
-            + aRes[j]/200);
-            j++;
-        }
-    }
-
-    public static void measuringMergeSort() {
-        int INITALLAMERGE = (int)Math.pow(2, 10);
-        int MAXTALLAMERGE = (int)Math.pow(2, 19);
-        long ti = 0, tf = 0, tt = 0;
-        int[] a;// Temps inicial, final i total
-
-        int[] res = new int[10];
-        // Imprimir capçalera de resultats
-        System.out.println("# Mergesort. Temps en microsegons");
-        System.out.print("# Talla     Promedi \n");
-        System.out.print("#-------------------\n");
-
-        // COMPLETAR
-        for (int i = 0; i <= 200; i++) {
-            int k = 0;
-            while (INITALLAMERGE <= MAXTALLAMERGE) {
-                a = createArray(INITALLAMERGE);
-                fillArrayRandom(a);
-                ti = System.nanoTime();
-                MeasurableAlgorithms.mergeSort(a, 0, a.length - 1);
-                tf = System.nanoTime();
-                tt = tf - ti;
-                res[k] += tt;
-                System.out.println(INITALLAMERGE + "     " + tt);
-                INITALLAMERGE *= 2;
-                k++;
+            System.out.print("   " + tt2/REPETICIONSQ + "   " + tt3/REPETICIONSQ + "\n");
+    
+           
             }
-        }
-
-        int j = 0;
-        for (int i = INITALLAMERGE; i <= MAXTALLAMERGE; i *= 2 ) {
-            System.out.println(INITALLAMERGE + "     " + res[j]/200 );
-            j++;
-        }
+      }
+    
+      public static void measuringMergeSort() {
+            int INITALLAMERGE = (int)Math.pow(2, 10);
+            int MAXTALLAMERGE = (int)Math.pow(2, 19);
+            long ti = 0, tf = 0, tt = 0;
+            int[] a;// Temps inicial, final i total
+    
+            int[] res = new int[10];
+            // Imprimir capçalera de resultats
+            System.out.println("# Mergesort. Temps en microsegons");
+            System.out.print("# Talla     Promedi \n");
+            System.out.print("#-------------------\n");
+    
+            // COMPLETAR
+            for (int i = 0; i <= 200; i++) {
+                int k = 0;
+                while (INITALLAMERGE <= MAXTALLAMERGE) {
+                    a = createArray(INITALLAMERGE);
+                    fillArrayRandom(a);
+                    ti = System.nanoTime();
+                    MeasurableAlgorithms.mergeSort(a, 0, a.length - 1);
+                    tf = System.nanoTime();
+                    tt = tf - ti;
+                    res[k] += tt;
+                    System.out.println(INITALLAMERGE + "     " + tt);
+                    INITALLAMERGE *= 2;
+                    k++;
+                }
+            }
+    
+            int j = 0;
+            for (int i = INITALLAMERGE; i <= MAXTALLAMERGE; i *= 2 ) {
+                System.out.println(INITALLAMERGE + "     " + res[j]/200 );
+                j++;
+            }
     }
 
     public static void help() {
