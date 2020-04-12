@@ -35,7 +35,7 @@ public class MeasuringSortingAlgorithms {
     private static void fillArrayRandom(int[] a) {
         // COMPLETAR
         for (int i = 0; i < a.length; i++) {
-            a[i] = (int) Math.random() * a.length ;
+            a[i] = (int) Math.floor(Math.random()*a.length*1000);
         }
     }
 
@@ -57,7 +57,7 @@ public class MeasuringSortingAlgorithms {
     private static void fillArraySortedInDescendingOrder(int[] a) {
         // COMPLETAR
         for (int i = a.length - 1; i >= 0; i--) {
-            a[i] = i;
+            a[i] = a.length - 1 - i; // per a que s'ordene al reves
         }
     }
 
