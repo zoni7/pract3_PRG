@@ -103,12 +103,12 @@ public class MeasuringSortingAlgorithms {
        
         for (int talla = INITALLA; talla <= MAXTALLA; talla += INCRTALLA) {
             int k = 0;
+            int[]v = createArray(talla);
            
-            while (k <= REPETICIONSQ) {
-                a = createArray(talla);
-                fillArrayRandom(a);
+            while (k < REPETICIONSQ) {                
+                fillArrayRandom(v);
                 ti = System.nanoTime();
-                MeasurableAlgorithms.selectionSort(a);
+                MeasurableAlgorithms.selectionSort(v);
                 tf = System.nanoTime();
                 tt = (tf - ti);
                 //res[k] += tt;                
@@ -130,14 +130,13 @@ public class MeasuringSortingAlgorithms {
 
         // COMPLETAR
         for(int talla = INITALLA; talla <= MAXTALLA; talla += INCRTALLA){
-            int[] a; // array promedi           
-            int[] m; // array millor            
-            int[] p; // array pitjor            
+            int[] a = createArray(talla); // array promedi           
+            int[] m = createArray(talla); // array millor            
+            int[] p = createArray(talla); // array pitjor    
             
             for (int i = 0; i <= REPETICIONSL; i++) {
                               
-                    // Creem array cas cas millor
-                    m = createArray(talla);
+                    // Creem array cas cas millor                    
                     fillArraySortedInAscendingOrder(m);
 
                     //cas millor
@@ -148,12 +147,10 @@ public class MeasuringSortingAlgorithms {
    
             }
             System.out.print("   " + talla +"   " + tt/REPETICIONSL);
-                        
+            
             for (int i = 0; i <= REPETICIONSQ; i++) {
                 
                     // Creem array cas cas pitjor
-    
-                    p = createArray(talla);
                     fillArraySortedInDescendingOrder(p);
 
                     //Cas pitjor
